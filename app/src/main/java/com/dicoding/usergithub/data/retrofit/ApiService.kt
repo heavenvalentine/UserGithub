@@ -9,7 +9,7 @@ import retrofit2.http.*
 interface ApiService {
     @GET("search/users")
     fun getUser(
-        @Path("id") id: String
+        @Query("q") query: String
     ): Call<UserGithubResponse>
 
     @GET("users/{username}")
