@@ -2,4 +2,8 @@
     <string name="app_name">UserGitHub</string>
     <string name="searchbar_expl">Search...</string>
     <string name="your_username">Your Username</string>
+    <string name="full_name">Full Name</string>
+    <string name="no_folls">0</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 </resources>
