@@ -1,6 +1,7 @@
 package com.dicoding.usergithub.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class UserAdapter(private val listOfUser: List<User>) :
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
+                    Log.d("UserAdapter", "Clicked username: $user.login")
                     intent.putExtra(DetailActivity.EXTRA_USERNAME, user.login)
                     itemView.context.startActivity(intent)
                 }

@@ -2,6 +2,7 @@ package com.dicoding.usergithub.ui.main
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,15 +21,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+
         val layoutManager = LinearLayoutManager(this)
         binding.rvUserList.layoutManager = layoutManager
 
         val mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+
         mainViewModel.listUser.observe(this) { user ->
             binding.rvUserList.adapter = rvUserList(user)
         }
+
         mainViewModel.isLoading.observe(this){
             showLoading(it)
+        }
+
+        mainViewModel.isFailure.observe(this){
+            Toast.makeText(this,it, Toast.LENGTH_SHORT).show()
         }
 
     }
