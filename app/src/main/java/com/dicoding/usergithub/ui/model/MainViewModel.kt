@@ -48,7 +48,7 @@ class MainViewModel : ViewModel() {
     }
 
     companion object{
-        private const val USERNAME = "heavenvalentine"
+        private const val USERNAME = "aespaldi"
     }
 
 }

@@ -65,7 +65,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="40dp"
                 android:layout_gravity="center"
-                tools:src="@tools:sample/avatars"
+                tools:src="@tools:sample/backgrounds/scenic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

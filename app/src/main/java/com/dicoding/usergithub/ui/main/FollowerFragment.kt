@@ -58,20 +58,19 @@ class FollowerFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBarFollower.visibility = View.VISIBLE
-        } else {
-            binding.progressBarFollower.visibility = View.GONE
-        }
+        binding.progressBarFollower.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
     private fun rvUserList(user: List<User>?): UserAdapter {
-        val listOfUser = ArrayList<User>()
-        user?.let{
-            listOfUser.addAll(it)
+        val listOfUser = user.orEmpty()
+        if (listOfUser.isEmpty()) {
+            binding.tvNoFollower.visibility = View.VISIBLE
+            binding.rvUserListFollower.visibility = View.GONE
+        } else {
+            binding.tvNoFollower.visibility = View.GONE
+            binding.rvUserListFollower.visibility = View.VISIBLE
         }
         return UserAdapter(listOfUser)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

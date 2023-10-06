@@ -39,7 +39,6 @@ class DetailActivity : AppCompatActivity() {
             setupViewModelObservers(username)
         }
 
-
         val sectionPagerAdapter = SectionPagerAdapter(this, username)
         val viewPager: ViewPager2 = binding.viewPager
         viewPager.adapter = sectionPagerAdapter
@@ -93,7 +92,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun displayUserDetails(user: UserDetailResponse) {
         with(binding) {
-            tvName.text = user.name ?: "(No Name)"
+            tvName.text = user.name ?: "-"
             tvUsername.text = user.login
             tvFollowersTotal.text = user.followers.toString()
             tvFollowingTotal.text = user.following.toString()

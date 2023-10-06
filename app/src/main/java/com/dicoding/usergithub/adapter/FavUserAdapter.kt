@@ -15,8 +15,9 @@ class FavUserAdapter(private val listAllUser: List<FavoriteUser>): RecyclerView.
     class ViewHolder(var binding: ItemUserBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false).let {
+            ViewHolder(it)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -40,8 +41,6 @@ class FavUserAdapter(private val listAllUser: List<FavoriteUser>): RecyclerView.
         }
     }
 
-    override fun getItemCount(): Int {
-        return listAllUser.size
-    }
+    override fun getItemCount(): Int = listAllUser.size
 
 }

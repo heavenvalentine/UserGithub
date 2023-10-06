@@ -32,10 +32,6 @@ class SectionPagerAdapter(activity: AppCompatActivity, private val username: Str
         return fragment as Fragment
     }
 
-    override fun getItemCount(): Int {
-        return 2
-    }
-
-
+    override fun getItemCount(): Int = 2
 
 }

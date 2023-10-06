@@ -37,10 +37,9 @@ class UserAdapter(private val listOfUser: List<User>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = listOfUser[position]

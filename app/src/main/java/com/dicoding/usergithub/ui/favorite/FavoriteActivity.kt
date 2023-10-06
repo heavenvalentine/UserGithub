@@ -1,6 +1,7 @@
 package com.dicoding.usergithub.ui.favorite
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,8 +24,13 @@ class FavoriteActivity: AppCompatActivity() {
                 layoutManager = LinearLayoutManager( this@FavoriteActivity)
                 adapter = FavUserAdapter(listOfFavUser)
             }
+
+            val noFavoriteUsersTextView = binding.tvNoFavUser
+            if (listOfFavUser.isEmpty()) {
+                noFavoriteUsersTextView.visibility = View.VISIBLE
+            } else {
+                noFavoriteUsersTextView.visibility = View.GONE
+            }
         }
     }
-
-
 }

@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-
         val layoutManager = LinearLayoutManager(this)
         binding.rvUserList.layoutManager = layoutManager
 
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             searchView.setupWithSearchBar(searchBar)
             searchView
                 .editText
-                .setOnEditorActionListener{ textView, actionId, event ->
+                .setOnEditorActionListener{ text, action, event ->
                     searchBar.text = searchView.text
                     val searchvalue = searchBar.text.toString()
                     mainViewModel.findUser(searchvalue)
@@ -82,7 +81,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         val pref = SettingPreferences.getInstance(application.dataStore)
         val themeViewModel = ViewModelProvider(this, ThemeViewModelFactory(pref))[ThemeViewModel::class.java]
 
@@ -93,8 +91,6 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
-
-
     }
 
     private fun rvUserList(user: List<User>?): UserAdapter {
@@ -106,10 +102,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
