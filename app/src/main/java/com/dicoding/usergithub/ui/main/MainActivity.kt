@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -30,16 +31,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.rvUserList.layoutManager = layoutManager
+        binding.rvUserList.layoutManager = LinearLayoutManager(this)
 
-        val mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+        val mainViewModel: MainViewModel by viewModels()
 
         mainViewModel.listUser.observe(this) { user ->
             binding.rvUserList.adapter = rvUserList(user)
         }
 
-        mainViewModel.isLoading.observe(this){
+        mainViewModel.isLoading.observe(this) {
             showLoading(it)
         }
 
@@ -47,18 +47,14 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,it, Toast.LENGTH_SHORT).show()
         }
 
-        with(binding){
+        binding.apply{
             searchView.setupWithSearchBar(searchBar)
-            searchView
-                .editText
-                .setOnEditorActionListener{ text, action, event ->
-                    searchBar.text = searchView.text
-                    val searchvalue = searchBar.text.toString()
-                    mainViewModel.findUser(searchvalue)
-                    searchView.hide()
-                    false
-                }
-
+            searchView.editText.setOnEditorActionListener { text, action, event ->
+                val searchValue = searchBar.text.toString()
+                mainViewModel.findUser(searchValue)
+                searchView.hide()
+                false
+            }
         }
 
         binding.searchBar.setOnMenuItemClickListener{ itemMenu ->
@@ -81,8 +77,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val pref = SettingPreferences.getInstance(application.dataStore)
-        val themeViewModel = ViewModelProvider(this, ThemeViewModelFactory(pref))[ThemeViewModel::class.java]
+        val themeViewModel = ViewModelProvider(this, ThemeViewModelFactory(SettingPreferences.getInstance(application.dataStore)))
+            .get(ThemeViewModel::class.java)
 
         themeViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {

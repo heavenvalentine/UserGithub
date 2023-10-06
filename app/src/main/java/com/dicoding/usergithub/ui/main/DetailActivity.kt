@@ -49,46 +49,52 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    private fun setupViewModelObservers(username:String) {
+    private fun setupViewModelObservers(username: String) {
         detailViewModel.isFailure.observe(this) { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
         }
 
         detailViewModel.detailUser.observe(this) { user ->
             displayUserDetails(user)
-            favViewModel.getUserClickedFavUsername(username).observe(this){clickedUser ->
-                if(clickedUser != null){
-                    isFav = true
-                    binding.favoriteButton.setImageResource(R.drawable.icon_full_fav)
-                }
-                else {
-                    isFav = false
-                    binding.favoriteButton.setImageResource(R.drawable.icon_outline_fav)
-                }
+
+            favViewModel.getUserClickedFavUsername(username).observe(this) { clickedUser ->
+                isFav = clickedUser != null
+                updateFavoriteButtonState()
             }
-            binding.favoriteButton.setOnClickListener{
+
+            binding.favoriteButton.setOnClickListener {
                 isFav = !isFav
-                if (isFav){
+
+                if (isFav) {
                     val userIsFavorite = FavoriteUser(
                         username = username,
                         avatarUrl = user.avatarUrl
                     )
                     favViewModel.insertUserFav(userIsFavorite)
-                    binding.favoriteButton.setImageResource(R.drawable.icon_full_fav)
                     Toast.makeText(this, "User Favorited", Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    favViewModel.getUserClickedFavUsername(username).observe(this){ item ->
+                } else {
+                    favViewModel.getUserClickedFavUsername(username).observe(this) { item ->
                         if (item != null) {
                             favViewModel.deleteUserFav(item)
-                            binding.favoriteButton.setImageResource(R.drawable.icon_outline_fav)
                             Toast.makeText(this, "Successfully Removed", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
+
+                updateFavoriteButtonState()
             }
         }
     }
+
+    private fun updateFavoriteButtonState() {
+        if (isFav) {
+            binding.favoriteButton.setImageResource(R.drawable.icon_full_fav)
+        } else {
+            binding.favoriteButton.setImageResource(R.drawable.icon_outline_fav)
+        }
+    }
+
+
 
     private fun displayUserDetails(user: UserDetailResponse) {
         binding.apply {

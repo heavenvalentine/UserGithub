@@ -28,7 +28,7 @@ class FollowerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         username = arguments?.getString(ARG_USERNAME)
-        followerViewModel.findUserFollower(username)
+        username?.let { followerViewModel.findUserFollower(it) }
 
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvUserListFollower.layoutManager = layoutManager
