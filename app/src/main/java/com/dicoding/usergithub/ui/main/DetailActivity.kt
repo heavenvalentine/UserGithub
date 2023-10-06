@@ -91,14 +91,14 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun displayUserDetails(user: UserDetailResponse) {
-        with(binding) {
+        binding.apply {
             tvName.text = user.name ?: "-"
             tvUsername.text = user.login
             tvFollowersTotal.text = user.followers.toString()
             tvFollowingTotal.text = user.following.toString()
-
             ivProfile.loadImage(user.avatarUrl)
         }
+
 
         binding.shareButton.setOnClickListener {
             val linkToGitHubUser = "https://github.com/${user.login}"
