@@ -1,9 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.UserGitHub" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.UserGitHub" parent="Base.Theme.UserGitHub" />
+
+    <style name="cardColor">
+        <item name="background">@color/lightdark</item>
+    </style>
 </resources>
