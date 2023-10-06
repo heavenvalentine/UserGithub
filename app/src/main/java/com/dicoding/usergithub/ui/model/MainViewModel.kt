@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.usergithub.data.response.User
-import com.dicoding.usergithub.data.response.UserGithubResponse
-import com.dicoding.usergithub.data.retrofit.ApiConfig
+import com.dicoding.usergithub.data.network.response.User
+import com.dicoding.usergithub.data.network.response.UserGithubResponse
+import com.dicoding.usergithub.data.network.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +25,7 @@ class MainViewModel : ViewModel() {
         findUser(USERNAME)
     }
 
-    private fun findUser(username: String) {
+    internal fun findUser(username: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getUser(username)
         client.enqueue(object: Callback<UserGithubResponse>{

@@ -1,8 +1,8 @@
-package com.dicoding.usergithub.data.retrofit
+package com.dicoding.usergithub.data.network.retrofit
 
-import com.dicoding.usergithub.data.response.User
-import com.dicoding.usergithub.data.response.UserDetailResponse
-import com.dicoding.usergithub.data.response.UserGithubResponse
+import com.dicoding.usergithub.data.network.response.User
+import com.dicoding.usergithub.data.network.response.UserDetailResponse
+import com.dicoding.usergithub.data.network.response.UserGithubResponse
 import retrofit2.Call
 import retrofit2.http.*
 

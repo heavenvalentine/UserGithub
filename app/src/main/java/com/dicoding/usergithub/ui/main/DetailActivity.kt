@@ -11,9 +11,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.dicoding.usergithub.R
 import com.dicoding.usergithub.adapter.SectionPagerAdapter
-import com.dicoding.usergithub.data.response.UserDetailResponse
+import com.dicoding.usergithub.data.local.entity.FavoriteUser
+import com.dicoding.usergithub.data.network.response.UserDetailResponse
 import com.dicoding.usergithub.databinding.ActivityDetailBinding
 import com.dicoding.usergithub.ui.model.DetailViewModel
+import com.dicoding.usergithub.ui.model.FavoriteViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -21,6 +23,8 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel by viewModels<DetailViewModel>()
+    private val favViewModel by viewModels<FavoriteViewModel>()
+    private var isFav = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +36,9 @@ class DetailActivity : AppCompatActivity() {
 
         if(username!=null) {
             detailViewModel.findUser(username)
+            setupViewModelObservers(username)
         }
 
-        setupViewModelObservers()
 
         val sectionPagerAdapter = SectionPagerAdapter(this, username)
         val viewPager: ViewPager2 = binding.viewPager
@@ -46,13 +50,44 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    private fun setupViewModelObservers() {
+    private fun setupViewModelObservers(username:String) {
         detailViewModel.isFailure.observe(this) { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
         }
 
         detailViewModel.detailUser.observe(this) { user ->
             displayUserDetails(user)
+            favViewModel.getUserClickedFavUsername(username).observe(this){clickedUser ->
+                if(clickedUser != null){
+                    isFav = true
+                    binding.favoriteButton.setImageResource(R.drawable.icon_full_fav)
+                }
+                else {
+                    isFav = false
+                    binding.favoriteButton.setImageResource(R.drawable.icon_outline_fav)
+                }
+            }
+            binding.favoriteButton.setOnClickListener{
+                isFav = !isFav
+                if (isFav){
+                    val userIsFavorite = FavoriteUser(
+                        username = username,
+                        avatarUrl = user.avatarUrl
+                    )
+                    favViewModel.insertUserFav(userIsFavorite)
+                    binding.favoriteButton.setImageResource(R.drawable.icon_full_fav)
+                    Toast.makeText(this, "User Favorited", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    favViewModel.getUserClickedFavUsername(username).observe(this){ item ->
+                        if (item != null) {
+                            favViewModel.deleteUserFav(item)
+                            binding.favoriteButton.setImageResource(R.drawable.icon_outline_fav)
+                            Toast.makeText(this, "Successfully Removed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -10,8 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.usergithub.R
 import com.dicoding.usergithub.adapter.UserAdapter
-import com.dicoding.usergithub.data.response.User
+import com.dicoding.usergithub.data.network.response.User
 import com.dicoding.usergithub.databinding.ActivityMainBinding
+import com.dicoding.usergithub.ui.favorite.FavoriteActivity
 import com.dicoding.usergithub.ui.model.MainViewModel
 import com.dicoding.usergithub.ui.theme.SettingPreferences
 import com.dicoding.usergithub.ui.theme.ThemeActivity
@@ -47,10 +48,24 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,it, Toast.LENGTH_SHORT).show()
         }
 
+        with(binding){
+            searchView.setupWithSearchBar(searchBar)
+            searchView
+                .editText
+                .setOnEditorActionListener{ textView, actionId, event ->
+                    searchBar.text = searchView.text
+                    val searchvalue = searchBar.text.toString()
+                    mainViewModel.findUser(searchvalue)
+                    searchView.hide()
+                    false
+                }
+
+        }
+
         binding.searchBar.setOnMenuItemClickListener{ itemMenu ->
             when(itemMenu.itemId) {
                 R.id.favorite_menu -> {
-                    val intent = Intent(this,FavoriteActivity::class.java)
+                    val intent = Intent(this, FavoriteActivity::class.java)
                     startActivity(intent)
                     true
                 }
@@ -78,6 +93,7 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
+
 
     }
 

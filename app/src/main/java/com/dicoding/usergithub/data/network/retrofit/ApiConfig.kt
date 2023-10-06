@@ -1,4 +1,4 @@
-package com.dicoding.usergithub.data.retrofit
+package com.dicoding.usergithub.data.network.retrofit
 
 import com.dicoding.usergithub.BuildConfig
 import okhttp3.Interceptor

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.usergithub.R
-import com.dicoding.usergithub.data.response.User
+import com.dicoding.usergithub.data.network.response.User
 import com.dicoding.usergithub.databinding.ItemUserBinding
 import com.dicoding.usergithub.ui.main.DetailActivity
 
