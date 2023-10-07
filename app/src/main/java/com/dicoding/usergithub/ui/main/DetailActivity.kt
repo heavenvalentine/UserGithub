@@ -34,14 +34,16 @@ class DetailActivity : AppCompatActivity() {
         val username = intent.getStringExtra(EXTRA_USERNAME)
         Log.d("DetailActivity", "Received username: $username")
 
-        if(username!=null) {
-            detailViewModel.findUser(username)
-            setupViewModelObservers(username)
+        username?.let {
+            detailViewModel.findUser(it)
+            setupViewModelObservers(it)
         }
 
-        val sectionPagerAdapter = SectionPagerAdapter(this, username)
         val viewPager: ViewPager2 = binding.viewPager
-        viewPager.adapter = sectionPagerAdapter
+        viewPager.adapter = SectionPagerAdapter(this, username).apply {
+            viewPager.adapter = this
+        }
+
         val tabsLayout: TabLayout = binding.follsTabLayout
         TabLayoutMediator(tabsLayout, viewPager){ tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])

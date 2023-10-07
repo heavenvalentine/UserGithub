@@ -17,4 +17,5 @@
     <string name="no_following_here">This user has no following.</string>
     <string name="no_follower_here">This user has no followers.</string>
     <string name="no_favorite_users_found">No favorite users found.</string>
+    <string name="user_not_found">User not found.</string>
 </resources>

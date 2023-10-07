@@ -15,9 +15,10 @@ import com.dicoding.usergithub.ui.model.FollowingViewModel
 
 class FollowingFragment : Fragment() {
     private lateinit var followingViewModel: FollowingViewModel
+    private var username:String? = null
+
     private var _binding: FragmentFollowingBinding? = null
     private val binding get() = _binding!!
-    private var username:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,8 @@ class FollowingFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFollowingBinding.inflate(inflater,container, false)
