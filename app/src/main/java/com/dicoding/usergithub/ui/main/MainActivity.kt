@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply{
             searchView.setupWithSearchBar(searchBar)
-            searchView.editText.setOnEditorActionListener { text, action, event ->
+            searchView.editText.setOnEditorActionListener { textView, action, keyEvent ->
                 searchBar.text = searchView.text
                 val searchValue = searchBar.text.toString()
                 mainViewModel.findUser(searchValue)
@@ -91,10 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun rvUserList(user: List<User>?): UserAdapter {
-        val listOfUser = ArrayList<User>()
-        user?.let{
-            listOfUser.addAll(it)
-        }
+        val listOfUser = user.orEmpty()
         return UserAdapter(listOfUser)
     }
 
