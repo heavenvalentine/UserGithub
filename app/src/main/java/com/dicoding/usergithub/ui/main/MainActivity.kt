@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply{
             searchView.setupWithSearchBar(searchBar)
             searchView.editText.setOnEditorActionListener { text, action, event ->
+                searchBar.text = searchView.text
                 val searchValue = searchBar.text.toString()
                 mainViewModel.findUser(searchValue)
                 searchView.hide()
