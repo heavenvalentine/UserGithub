@@ -2,7 +2,7 @@ package com.dicoding.usergithub.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,10 +20,10 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityDetailBinding
     private val detailViewModel by viewModels<DetailViewModel>()
     private val favViewModel by viewModels<FavoriteViewModel>()
+
+    private lateinit var binding: ActivityDetailBinding
     private var isFav = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,6 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val username = intent.getStringExtra(EXTRA_USERNAME)
-        Log.d("DetailActivity", "Received username: $username")
 
         username?.let {
             detailViewModel.findUser(it)
@@ -52,6 +51,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupViewModelObservers(username: String) {
+        detailViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
         detailViewModel.isFailure.observe(this) { errorMessage ->
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
         }
@@ -96,8 +99,6 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun displayUserDetails(user: UserDetailResponse) {
         binding.apply {
             tvName.text = user.name ?: "-"
@@ -115,6 +116,10 @@ class DetailActivity : AppCompatActivity() {
             shareIntent.putExtra(Intent.EXTRA_TEXT, linkToGitHubUser)
             startActivity(Intent.createChooser(shareIntent, "Share GitHub User Profile"))
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBarDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun ImageView.loadImage(imageUrl: String) {

@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply{
             searchView.setupWithSearchBar(searchBar)
-            searchView.editText.setOnEditorActionListener { textView, action, keyEvent ->
+            searchView.editText.setOnEditorActionListener { _, _, _ ->
                 searchBar.text = searchView.text
                 val searchValue = searchBar.text.toString()
                 mainViewModel.findUser(searchValue)
@@ -78,8 +78,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val themeViewModel = ViewModelProvider(this, ThemeViewModelFactory(SettingPreferences.getInstance(application.dataStore)))
-            .get(ThemeViewModel::class.java)
+        val themeViewModel = ViewModelProvider(this, ThemeViewModelFactory(SettingPreferences.getInstance(application.dataStore)))[ThemeViewModel::class.java]
 
         themeViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {

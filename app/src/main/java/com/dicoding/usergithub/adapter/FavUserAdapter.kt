@@ -1,7 +1,6 @@
 package com.dicoding.usergithub.adapter
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +14,7 @@ class FavUserAdapter(private val listAllUser: List<FavoriteUser>): RecyclerView.
     class ViewHolder(var binding: ItemUserBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false).let {
-            ViewHolder(it)
-        }
+        return ViewHolder(ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,7 +30,6 @@ class FavUserAdapter(private val listAllUser: List<FavoriteUser>): RecyclerView.
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                    Log.d("UserAdapter", "Clicked username: $listUser.login")
                     intent.putExtra(DetailActivity.EXTRA_USERNAME, listUser.username)
                     itemView.context.startActivity(intent)
                 }

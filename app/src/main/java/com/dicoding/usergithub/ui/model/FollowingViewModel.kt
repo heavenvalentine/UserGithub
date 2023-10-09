@@ -27,14 +27,6 @@ class FollowingViewModel: ViewModel() {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 _isLoading.value = false
                 if(response.isSuccessful) {
-                    if(response.body() == null)
-                    {
-                        Log.d("Failure", "no data")
-                    }
-                    else
-                    {
-                        Log.d("Success", "data found")
-                    }
                     _listFollowingUser.value = response.body()
                 }
             }

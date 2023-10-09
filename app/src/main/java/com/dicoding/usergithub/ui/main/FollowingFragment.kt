@@ -15,10 +15,10 @@ import com.dicoding.usergithub.ui.model.FollowingViewModel
 
 class FollowingFragment : Fragment() {
     private lateinit var followingViewModel: FollowingViewModel
-    private var username:String? = null
-
     private var _binding: FragmentFollowingBinding? = null
+
     private val binding get() = _binding!!
+    private var username:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +28,8 @@ class FollowingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        username = arguments?.getString(ARG_USERNAME)
-        followingViewModel.findUserFollowing(username)
+        username = arguments?.getString(FollowerFragment.ARG_USERNAME)
+        username?.let { followingViewModel.findUserFollowing(it) }
 
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvUserListFollowing.layoutManager = layoutManager

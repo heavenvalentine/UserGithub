@@ -23,7 +23,7 @@ class SectionPagerAdapter(activity: AppCompatActivity, private val username: Str
             1 -> {
                 fragment = FollowingFragment()
                 username?.let {
-                    (fragment as FollowingFragment).arguments = Bundle().apply {
+                    fragment.arguments = Bundle().apply {
                         putString(FollowingFragment.ARG_USERNAME, it)
                     }
                 }

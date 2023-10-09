@@ -18,18 +18,14 @@ class FavoriteActivity: AppCompatActivity() {
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        favViewModel.getAllFavUser().observe(this){ listOfFavUser ->
+        favViewModel.getAllFavUser().observe(this) { listOfFavUser ->
             binding.apply {
                 rvUserListFavorite.layoutManager = LinearLayoutManager(this@FavoriteActivity)
                 rvUserListFavorite.adapter = FavUserAdapter(listOfFavUser)
             }
 
             val noFavoriteUsersTextView = binding.tvNoFavUser
-            if (listOfFavUser.isEmpty()) {
-                noFavoriteUsersTextView.visibility = View.VISIBLE
-            } else {
-                noFavoriteUsersTextView.visibility = View.GONE
-            }
+            noFavoriteUsersTextView.visibility = if (listOfFavUser.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 }

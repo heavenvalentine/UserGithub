@@ -1,9 +1,10 @@
 package com.dicoding.usergithub.ui.favorite.executors
 
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class AppExecutors private constructor() {
-    val diskIO = Executors.newSingleThreadExecutor()
+    val diskIO: ExecutorService = Executors.newSingleThreadExecutor()
 
     companion object {
         private var instance: AppExecutors? = null
